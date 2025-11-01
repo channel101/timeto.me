@@ -25,6 +25,9 @@ data class KvDb(
 
     companion object : Backupable__Holder {
 
+        fun anyChangeFlow(): Flow<*> =
+            db.kVQueries.anyChange().asFlow()
+
         suspend fun selectAll(): List<KvDb> = dbIo {
             db.kVQueries.selectAll().asList { toDb() }
         }
@@ -79,6 +82,7 @@ data class KvDb(
     enum class KEY {
 
         DAY_START_OFFSET_SECONDS,
+        ACTIVITIES_MIGRATED,
         TOKEN,
         TOKEN_PASSWORD,
         WHATS_NEW_CHECK_UNIX_DAY,
